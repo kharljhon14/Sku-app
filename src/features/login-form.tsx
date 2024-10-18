@@ -1,13 +1,19 @@
-'use client';
+"use client";
 
-import { Eye, EyeOff } from 'lucide-react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 export default function LoginForm() {
   // Show password state
@@ -33,10 +39,7 @@ export default function LoginForm() {
                   <FormItem>
                     <FormLabel className="font-semibold">Email</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Email"
-                      />
+                      <Input {...field} placeholder="Email" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -52,7 +55,7 @@ export default function LoginForm() {
                         <Input
                           {...field}
                           placeholder="Password"
-                          type={isShowPassword ? 'text' : 'password'}
+                          type={isShowPassword ? "text" : "password"}
                         />
                         <Button
                           size="icon"
@@ -71,10 +74,7 @@ export default function LoginForm() {
             </div>
 
             <div className="w-full mt-6">
-              <Button
-                className="w-full"
-                type="submit"
-              >
+              <Button className="w-full" type="submit">
                 Sign In
               </Button>
             </div>
