@@ -36,6 +36,10 @@ model SKU {
   updatedBy  User?     @relation("UpdatedSKUs", fields: [updatedByUserId], references: [id])
   categoryId Int
 
+  @@index([categoryId])
+  @@index([supplierId])
+  @@index([updatedByUserId])
+  @@index([createdByUserId])
   @@map("skus")
 }
 
