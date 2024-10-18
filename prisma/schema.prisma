@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SKU {
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(255)
+  skuCode         String   @unique @db.VarChar(50)
+  productName     String   @db.VarChar(255)
+  description     String?
+  category        Category @relation(fields: [categoryId], references: [id])
+  price           Decimal  @default(0.00)
+  costPrice       Decimal  @default(0.00)
+  stockQuantity   Int      @default(0)
+  stockThreshold  Int      @default(0)
+  supplierId      Int?
+  createdByUserId Int?
+  updatedByUserId Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  Supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  createdBy  User?     @relation("CreatedSKUs", fields: [createdByUserId], references: [id])
+  updatedBy  User?     @relation("UpdatedSKUs", fields: [updatedByUserId], references: [id])
+  categoryId Int
+
+  @@map("skus")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+  Sku  SKU[]
+
+  @@map("categories")
+}
+
+model Supplier {
+  id    Int     @id @default(autoincrement())
+  name  String
+  email String?
+
+  skus SKU[]
+
+  @@map("suppliers")
+}
+
+enum Role {
+  USER
+  ADMIN
+  TECH
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("USER")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdSKUs SKU[] @relation("CreatedSKUs")
+  updatedSKUs SKU[] @relation("UpdatedSKUs")
+
+  @@map("users")
+}
