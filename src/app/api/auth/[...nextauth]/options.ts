@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -7,7 +6,7 @@ import prisma from '../../../../../prisma/db';
 const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Username and Password',
+      name: 'Credentials',
       credentials: {
         email: {
           label: 'Email',
@@ -31,11 +30,11 @@ const options: NextAuthOptions = {
           return null;
         }
 
-        const match = await bcrypt.compare(credentials!.password, user.password);
+        // const match = await bcrypt.compare(credentials!.password, user.password);
 
-        if (!match) {
-          return null;
-        }
+        // if (!match) {
+        //   return null;
+        // }
 
         return {
           email: user.email,
@@ -44,6 +43,9 @@ const options: NextAuthOptions = {
       }
     })
   ],
+  session: {
+    strategy: 'jwt'
+  },
   pages: {
     signIn: '/auth'
   }

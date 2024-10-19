@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -17,8 +18,21 @@ export default function LoginForm() {
 
   const form = useForm<LoginSchemaType>({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        ...data
+      });
+
+      if (result?.error) {
+        console.error('Login Failed:', result.error);
+      } else if (result?.ok) {
+        console.log('Login success');
+      }
+    } catch (error) {
+      console.error(' An error occured during sign in:', error);
+    }
   };
 
   return (
