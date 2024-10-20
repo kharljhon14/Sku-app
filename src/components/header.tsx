@@ -12,7 +12,7 @@ export default async function HeaderNav() {
   const session = await getServerSession(options);
 
   return (
-    <header className="flex justify-between px-6 py-4">
+    <header className="flex justify-between px-6 py-4 border-b items-center shadow">
       <div>
         <Link href="/">
           <p className="text-lg font-semibold">Skuify</p>
