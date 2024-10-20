@@ -5,6 +5,7 @@ import options from '@/app/api/auth/[...nextauth]/options';
 import paths from '@/routes';
 
 import LogOutButton from './logout-button';
+import NavLinks from './nav-links';
 import ThemeToggle from './theme-toggle';
 import { buttonVariants } from './ui/button';
 
@@ -19,24 +20,7 @@ export default async function HeaderNav() {
         </Link>
       </div>
       <nav className="flex justify-center gap-x-2">
-        <Link
-          className="navbar-link"
-          href="/"
-        >
-          Dashboard
-        </Link>
-        <Link
-          className="navbar-link"
-          href="/"
-        >
-          SKUs
-        </Link>
-        <Link
-          className="navbar-link"
-          href="/"
-        >
-          Suppliers
-        </Link>
+        <NavLinks />
       </nav>
       <div className="flex items-center gap-x-2">
         {session?.user ? (

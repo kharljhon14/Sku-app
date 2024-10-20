@@ -1,7 +1,18 @@
-export default function SKUsPage() {
+import SKUsTable from '@/features/skus/skus-table';
+
+import prisma from '../../../prisma/db';
+
+export default async function SKUsPage() {
+  const skus = await prisma.sKU.findMany({
+    include: {
+      category: true,
+      Supplier: true
+    }
+  });
+
   return (
     <div>
-      <h1>SKU Page</h1>
+      <SKUsTable skus={skus} />
     </div>
   );
 }
