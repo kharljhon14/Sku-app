@@ -27,7 +27,7 @@ export default function RootLayout({
         >
           <AuthSessionProvider>
             <HeaderNav />
-            <main className="flex flex-col items-center w-full max-w-6xl">{children}</main>
+            <main className="flex flex-col items-center w-full max-w-6xlmx-auto">{children}</main>
           </AuthSessionProvider>
         </ThemeProvider>
       </body>

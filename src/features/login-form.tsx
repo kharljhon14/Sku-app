@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -10,11 +11,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import paths from '@/routes';
 import { loginSchema, LoginSchemaType } from '@/schemas/auth';
 
 export default function LoginForm() {
   // Show password state
   const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm<LoginSchemaType>({ resolver: zodResolver(loginSchema) });
 
@@ -28,6 +32,8 @@ export default function LoginForm() {
       if (result?.error) {
         console.error('Login Failed:', result.error);
       } else if (result?.ok) {
+        router.push(paths.homePath());
+        router.refresh();
         console.log('Login success');
       }
     } catch (error) {

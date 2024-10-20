@@ -1,9 +1,16 @@
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
 
+import options from '@/app/api/auth/[...nextauth]/options';
+import paths from '@/routes';
+
+import LogOutButton from './logout-button';
 import ThemeToggle from './theme-toggle';
-import { Button } from './ui/button';
+import { buttonVariants } from './ui/button';
 
-export default function HeaderNav() {
+export default async function HeaderNav() {
+  const session = await getServerSession(options);
+
   return (
     <header className="flex justify-between px-6 py-4">
       <div>
@@ -32,7 +39,16 @@ export default function HeaderNav() {
         </Link>
       </nav>
       <div className="flex items-center gap-x-2">
-        <Button>Login</Button>
+        {session?.user ? (
+          <LogOutButton />
+        ) : (
+          <Link
+            className={`${buttonVariants()}`}
+            href={paths.authPath()}
+          >
+            Login
+          </Link>
+        )}
         <ThemeToggle />
       </div>
     </header>

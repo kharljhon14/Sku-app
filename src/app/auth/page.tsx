@@ -1,8 +1,8 @@
-import LoginForm from "@/features/login-form";
+import LoginForm from '@/features/login-form';
 
 export default function AuthPage() {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="w-full flex justify-center items-center mt-60">
       <LoginForm />
     </div>
   );
