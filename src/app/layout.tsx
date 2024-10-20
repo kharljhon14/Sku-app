@@ -2,6 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 
+import HeaderNav from '@/components/header';
 import AuthSessionProvider from '@/providers/session-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -24,7 +25,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthSessionProvider>{children}</AuthSessionProvider>
+          <AuthSessionProvider>
+            <HeaderNav />
+            <main className="flex flex-col items-center w-full max-w-6xl">{children}</main>
+          </AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>
