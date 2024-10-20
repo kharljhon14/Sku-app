@@ -2,6 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 
+import AuthSessionProvider from '@/providers/session-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthSessionProvider>{children}</AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>
