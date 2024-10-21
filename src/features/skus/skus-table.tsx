@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import {
   Table,
   TableBody,
@@ -6,6 +8,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
+import paths from '@/routes';
 import { DetailedSKU } from '@/types/sku';
 
 interface Props {
@@ -59,7 +62,12 @@ export default function SKUsTable({ skus }: Props) {
         {skus.map((sku) => (
           <TableRow key={sku.id}>
             <TableCell>
-              <div>{sku.name}</div>
+              <Link
+                className="underline"
+                href={paths.showSkuPath(sku.id.toString())}
+              >
+                {sku.name}
+              </Link>
             </TableCell>
             <TableCell>
               <div>{sku.skuCode}</div>
