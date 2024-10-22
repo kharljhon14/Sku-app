@@ -1,4 +1,4 @@
-import SKUDetails from '@/features/skus/sku-details';
+import SKUInformationContainer from '@/features/skus/sku-information-container';
 
 import prisma from '../../../../prisma/db';
 
@@ -19,8 +19,17 @@ export default async function SKUPage({ params }: Props) {
     }
   });
 
+  const categories = await prisma.category.findMany();
+  const suppliers = await prisma.supplier.findMany();
+
   if (!sku) {
     return <div className="text-destructive">SKU not found!</div>;
   }
-  return <SKUDetails sku={sku} />;
+  return (
+    <SKUInformationContainer
+      sku={sku}
+      categories={categories}
+      suppliers={suppliers}
+    />
+  );
 }
