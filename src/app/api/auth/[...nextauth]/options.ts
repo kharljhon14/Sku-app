@@ -23,6 +23,11 @@ const options: NextAuthOptions = {
         const user = await prisma.user.findUnique({
           where: {
             email: credentials!.email
+          },
+          select: {
+            email: true,
+            id: true,
+            role: true
           }
         });
 
@@ -36,15 +41,29 @@ const options: NextAuthOptions = {
         //   return null;
         // }
 
-        return {
-          email: user.email,
-          id: user.id.toString()
-        };
+        return user;
       }
     })
   ],
+
   session: {
     strategy: 'jwt'
+  },
+  callbacks: {
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.role = user.role;
+      }
+
+      return token;
+    },
+    session({ session, token }) {
+      if (session.user) {
+        session.user.role = token.role || 'USER';
+      }
+
+      return session;
+    }
   },
   pages: {
     signIn: '/auth'
