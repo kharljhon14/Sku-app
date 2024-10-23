@@ -1,5 +1,3 @@
-import { revalidatePath } from 'next/cache';
-
 import { SKUSchemaType } from '@/schemas/sku';
 
 export async function createSKU(sku: SKUSchemaType) {
@@ -18,7 +16,6 @@ export async function createSKU(sku: SKUSchemaType) {
     }
 
     const createdSKU = await res.json();
-    revalidatePath('/skus');
     return createdSKU;
   } catch (err) {
     console.error('Error creating SKU:', err);
@@ -46,6 +43,26 @@ export async function updateSKU(sku: SKUSchemaType, id: string) {
     return updatedSKU;
   } catch (err) {
     console.error('Error udpdating SKU:', err);
+    throw err;
+  }
+}
+
+export async function deleteSKU(id: string) {
+  try {
+    const res = await fetch(`/api/skus/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error);
+    }
+
+    const message = await res.json();
+
+    return message;
+  } catch (err) {
+    console.error('Error deleting SKU:', err);
     throw err;
   }
 }

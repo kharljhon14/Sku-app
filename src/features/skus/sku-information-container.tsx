@@ -2,6 +2,7 @@ import { Category, Supplier } from '@prisma/client';
 
 import { DetailedSKU } from '@/types/sku';
 
+import DeleteSKUButton from './delete-sku-button';
 import SKUDetails from './sku-details';
 import SKUForm from './sku-form';
 
@@ -17,12 +18,13 @@ export default function SKUInformationContainer({ sku, categories, suppliers }: 
       <div className="flex-1">
         <SKUDetails sku={sku} />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 flex gap-2">
         <SKUForm
           categories={categories}
           suppliers={suppliers}
           sku={sku}
         />
+        <DeleteSKUButton sku={sku} />
       </div>
     </div>
   );

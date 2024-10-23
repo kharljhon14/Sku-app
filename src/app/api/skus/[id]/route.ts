@@ -36,3 +36,21 @@ export async function PATCH(request: NextRequest, { params }: Props) {
 
   return NextResponse.json(updatedSKU);
 }
+
+export async function DELETE(_request: NextRequest, { params }: Props) {
+  const sku = await prisma.sKU.findUnique({
+    where: {
+      id: Number(params.id)
+    }
+  });
+
+  if (!sku) return NextResponse.json({ error: 'SKU not found!' }, { status: 404 });
+
+  await prisma.sKU.delete({
+    where: {
+      id: Number(params.id)
+    }
+  });
+
+  return NextResponse.json({ message: 'SKU deleted' });
+}

@@ -71,7 +71,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               autoComplete="off"
-              className="flex flex-col space-y-6"
+              className="flex flex-col space-y-3"
             >
               <FormField
                 control={form.control}
@@ -235,7 +235,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
               <div className="flex justify-between gap-2">
                 <FormField
                   control={form.control}
-                  defaultValue={Number(sku?.price)}
+                  defaultValue={Number(sku?.price) || 0.0}
                   name="price"
                   render={({ field }) => (
                     <FormItem className="flex-1">
@@ -261,7 +261,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                 />
                 <FormField
                   control={form.control}
-                  defaultValue={Number(sku?.costPrice)}
+                  defaultValue={Number(sku?.costPrice) || 0.0}
                   name="costPrice"
                   render={({ field }) => (
                     <FormItem className="flex-1">
