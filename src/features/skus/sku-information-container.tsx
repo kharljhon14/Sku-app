@@ -1,7 +1,5 @@
 import { Category, Supplier } from '@prisma/client';
 
-import { buttonVariants } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { DetailedSKU } from '@/types/sku';
 
 import SKUDetails from './sku-details';
@@ -20,16 +18,11 @@ export default function SKUInformationContainer({ sku, categories, suppliers }: 
         <SKUDetails sku={sku} />
       </div>
       <div className="flex-1">
-        <Dialog>
-          <DialogTrigger className={buttonVariants({ variant: 'default' })}>Edit SKU</DialogTrigger>
-          <DialogContent>
-            <SKUForm
-              categories={categories}
-              suppliers={suppliers}
-              sku={sku}
-            />
-          </DialogContent>
-        </Dialog>
+        <SKUForm
+          categories={categories}
+          suppliers={suppliers}
+          sku={sku}
+        />
       </div>
     </div>
   );

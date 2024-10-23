@@ -28,7 +28,9 @@ export async function PATCH(request: NextRequest, { params }: Props) {
       id: parseInt(params.id)
     },
     data: {
-      ...body
+      ...body,
+      supplierId: Number(body.supplierId),
+      categoryId: Number(body.categoryId)
     }
   });
 
