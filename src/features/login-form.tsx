@@ -34,7 +34,6 @@ export default function LoginForm() {
       } else if (result?.ok) {
         router.push(paths.homePath());
         router.refresh();
-        console.log('Login success');
       }
     } catch (error) {
       console.error(' An error occured during sign in:', error);

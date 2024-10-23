@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 import HeaderNav from '@/components/header';
+import QueryProvider from '@/providers/query-client-provider';
 import AuthSessionProvider from '@/providers/session-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -25,10 +26,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthSessionProvider>
-            <HeaderNav />
-            <main className="m-6">{children}</main>
-          </AuthSessionProvider>
+          <QueryProvider>
+            <AuthSessionProvider>
+              <HeaderNav />
+              <main className="m-6">{children}</main>
+            </AuthSessionProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

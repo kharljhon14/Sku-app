@@ -9,8 +9,8 @@ export const SKUSchema = z.object({
   costPrice: z.number().default(0.0),
   stockQuantity: z.number().int().optional().default(0),
   stockThreshold: z.number().int().optional().default(0),
-  supplierId: z.number().int().nullable().optional(),
-  categoryId: z.number().int()
+  supplierId: z.number().nullable().optional(),
+  categoryId: z.number()
 });
 
 export type SKUSchemaType = z.infer<typeof SKUSchema>;
