@@ -7,6 +7,9 @@ export default async function SKUsPage() {
     include: {
       category: true,
       Supplier: true
+    },
+    orderBy: {
+      ['createdAt']: 'desc'
     }
   });
 
