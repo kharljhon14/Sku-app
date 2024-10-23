@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { updateSKU } from '@/actions/sku';
+import { createSKU, updateSKU } from '@/actions/sku';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -34,7 +34,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
 
   const form = useForm<SKUSchemaType>({ resolver: zodResolver(SKUSchema) });
 
-  const { mutate } = useMutation({
+  const { mutate: update_sku } = useMutation({
     mutationFn: (updatedSKU: { sku: SKUSchemaType; id: string }) =>
       updateSKU(updatedSKU.sku, updatedSKU.id),
     onSuccess: () => {
@@ -43,15 +43,27 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
     }
   });
 
+  const { mutate: create_sku } = useMutation({
+    mutationFn: (createdSKU: { sku: SKUSchemaType }) => createSKU(createdSKU.sku),
+    onSuccess: () => {
+      setModalOpen(false);
+      router.refresh();
+    }
+  });
+
   const onSubmit: SubmitHandler<SKUSchemaType> = (data) => {
-    if (sku) mutate({ sku: data, id: sku.id.toString() });
+    if (sku) update_sku({ sku: data, id: sku.id.toString() });
+    else create_sku({ sku: data });
   };
+
   return (
     <Dialog
       open={modalOpen}
       onOpenChange={setModalOpen}
     >
-      <DialogTrigger className={buttonVariants({ variant: 'default' })}>Edit SKU</DialogTrigger>
+      <DialogTrigger className={buttonVariants({ variant: 'default' })}>
+        {sku ? 'Edit SKU' : 'Create SKU'}
+      </DialogTrigger>
       <DialogContent>
         <div>
           <h3 className="font-semibold text-center text-lg">{sku ? 'Update SKU' : 'Add SKU'}</h3>
@@ -126,7 +138,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
               />
               <FormField
                 control={form.control}
-                defaultValue={sku?.description as string | undefined}
+                defaultValue={sku?.description ? sku.description : ''}
                 name="description"
                 render={({ field }) => (
                   <FormItem>
