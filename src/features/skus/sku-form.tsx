@@ -26,8 +26,6 @@ interface Props {
 export default function SKUForm({ categories, suppliers, sku }: Props) {
   const form = useForm<SKUSchemaType>({ resolver: zodResolver(SKUSchema) });
 
-  console.log(form.formState.errors);
-  console.log(form.getValues());
   const onSubmit: SubmitHandler<SKUSchemaType> = (data) => {
     console.log(data);
   };
@@ -37,6 +35,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
+          autoComplete="off"
           className="flex flex-col space-y-6"
         >
           <FormField
@@ -52,7 +51,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                       {...field}
                       placeholder="Name"
                     />
-                    {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                    <small className="text-destructive">
+                      {form.formState.errors.name?.message}
+                    </small>
                   </div>
                 </FormControl>
               </FormItem>
@@ -71,7 +72,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                       {...field}
                       placeholder="Product Name"
                     />
-                    {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                    <small className="text-destructive">
+                      {form.formState.errors.productName?.message}
+                    </small>
                   </div>
                 </FormControl>
               </FormItem>
@@ -90,7 +93,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                       {...field}
                       placeholder="SKU-000"
                     />
-                    {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                    <small className="text-destructive">
+                      {form.formState.errors.skuCode?.message}
+                    </small>
                   </div>
                 </FormControl>
               </FormItem>
@@ -109,7 +114,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                       {...field}
                       placeholder="Type the decription here."
                     />
-                    {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                    <small className="text-destructive">
+                      {form.formState.errors.description?.message}
+                    </small>
                   </div>
                 </FormControl>
               </FormItem>
@@ -118,7 +125,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
           <div className="flex justify-between gap-2">
             <FormField
               control={form.control}
-              defaultValue={sku?.categoryId}
+              defaultValue={sku?.categoryId.toString()}
               name="categoryId"
               render={({ field }) => (
                 <FormItem className="flex-1">
@@ -133,7 +140,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                           <SelectValue placeholder="Category" />
                         </SelectTrigger>
 
-                        {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                        <small className="text-destructive">
+                          {form.formState.errors.categoryId?.message}
+                        </small>
                       </div>
                       <SelectContent>
                         {categories.map((category) => (
@@ -152,7 +161,7 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
             />
             <FormField
               control={form.control}
-              defaultValue={sku?.supplierId}
+              defaultValue={sku?.supplierId?.toString()}
               name="supplierId"
               render={({ field }) => (
                 <FormItem className="flex-1">
@@ -167,7 +176,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                           <SelectValue placeholder="Supplier" />
                         </SelectTrigger>
 
-                        {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                        <small className="text-destructive">
+                          {form.formState.errors.supplierId?.message}
+                        </small>
                       </div>
                       <SelectContent>
                         {suppliers?.map((supplier) => (
@@ -205,7 +216,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                         step="0.1"
                         placeholder="0.00"
                       />
-                      {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                      <small className="text-destructive">
+                        {form.formState.errors.price?.message}
+                      </small>
                     </div>
                   </FormControl>
                 </FormItem>
@@ -230,7 +243,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                         step="0.1"
                         placeholder="0.00"
                       />
-                      {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                      <small className="text-destructive">
+                        {form.formState.errors.costPrice?.message}
+                      </small>
                     </div>
                   </FormControl>
                 </FormItem>
@@ -257,7 +272,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                         type="number"
                         placeholder="0"
                       />
-                      {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                      <small className="text-destructive">
+                        {form.formState.errors.stockQuantity?.message}
+                      </small>
                     </div>
                   </FormControl>
                 </FormItem>
@@ -281,7 +298,9 @@ export default function SKUForm({ categories, suppliers, sku }: Props) {
                         }
                         placeholder="0"
                       />
-                      {/* <small className="text-destructive">{form.formState.errors.email?.message}</small> */}
+                      <small className="text-destructive">
+                        {form.formState.errors.stockThreshold?.message}
+                      </small>
                     </div>
                   </FormControl>
                 </FormItem>
